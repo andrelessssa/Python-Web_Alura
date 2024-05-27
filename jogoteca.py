@@ -23,8 +23,7 @@ def inicio():
 @app.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login?proxima=/novo')
-    
+        return redirect('/login?proxima=novo')
     return render_template('novo.html', titulo='Crie um novo Jogo:')
 
 @app.route('/criar', methods=['POST'])
@@ -42,7 +41,7 @@ def login():
     proxima = request.args.get('proxima')
     return render_template('login.html', proxima=proxima)
 
-@app.route('/autenticar', methods=['POST'])
+@app.route('/autenticar', methods=['POST',])
 def autenticar():
     if 'aloha' == request.form['senha']:
         session['usuario_logado'] = request.form['usuario']
@@ -52,10 +51,11 @@ def autenticar():
     else:
         flash('Usuario nao Logado')
         return redirect('/login')
+    
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
-    flash('Nenhum Usuario Logado')
+    flash('Usuario Logado')
     return redirect('/')
 
 app.run(debug=True)
